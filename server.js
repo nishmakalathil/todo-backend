@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model('user', UserSchema);
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
@@ -89,6 +90,6 @@ app.delete("/task/:id", (req, res) => {
   });
 });
 
-app.listen(3008, () => {
-  console.log('Server is running on port 3008');  
+app.listen(PORT, () => {
+  console.log('Server is running on port ${PORT}');  
 });
