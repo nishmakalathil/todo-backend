@@ -37,7 +37,16 @@ const User = mongoose.model('user', UserSchema);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: "http://localhost:5173" }));
+// Use environment variables to set the origin 
+const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:5173'];
+
+app.use(cors({ origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  } }));
 app.use(express.json());
 
 app.use((req, res, next) => {
