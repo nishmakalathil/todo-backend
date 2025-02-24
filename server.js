@@ -38,12 +38,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Use environment variables to set the origin 
-const allowedOrigins = ['https://react-assaignment-4.vercel.app' || 'http://localhost:5173'];
+const allowedOrigins = ['https://react-assaignment-4.vercel.app'];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || origin === allowedOrigin) {
-      callback(null, true);
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin); // ✅ This ensures the origin is returned properly
     } else {
       callback(new Error('Not allowed by CORS'));
     }
